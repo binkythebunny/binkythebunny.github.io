@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet Binky the Bunny!</title>
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #000000, #ffffff);
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --text-light: #f0f0f0;
+      --text-dark: #222;
+      --accent: #ff8fa3;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--primary-gradient);
+      color: var(--text-light);
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 30px;
+    }
+
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .section {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      margin: 30px auto;
+      padding: 30px;
+      max-width: 900px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .gallery img {
+      width: 280px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .facts h2, .contact h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .facts ul {
+      list-style: none;
+      padding: 0;
+      color: var(--text-light);
+    }
+
+    .facts li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      background: rgba(255,255,255,0.8);
+      color: var(--text-dark);
+    }
+
+    button {
+      padding: 12px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(to right, #000000, #ffffff);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #ffffff, #000000);
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9em;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+      .gallery img {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Binky's World 🐇</h1>
+    <p>The fluffiest black-and-white explorer you'll ever meet!</p>
+  </header>
+
+  <section class="section gallery">
+    <img src="binkyparked.jpg" alt="Binky in his parking spot" />
+    <img src="binkydishes.jpg" alt="Binky in the area where dishes are washed" />
+    <img src="binkyblanky.jpg" alt="Binky on a blanket" />
+  </section>
+
+  <section class="section facts">
+    <h2>Fun Facts About Binky</h2>
+    <ul>
+      <li>🥕 Loves carrots, spinach and Weet-Bix.</li>
+      <li>🍎 Hates Apples.</li>
+      <li>🦶 Likes licking toes.</li>
+    </ul>
+  </section>
+
+  <section class="section contact">
+    <form id="binkyForm">
+      <h2>Send Binky a Message!</h2>
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" rows="4" placeholder="Your message to Binky..." required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>Made with ❤️ for Binky the Bunny</p>
+  </footer>
+
+  <script>
+    document.getElementById('binkyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      const webhookURL = 'https://discord.com/api/webhooks/1425349684494336040/MwLBfewL3DKBgMJg73QT-yVDTtTLqm8RAZ5aw0GNkwREvY26KOBcYtSu-OxAhlJpoGur';
+
+      const payload = {
+        content: `📬 New message for Binky!\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Message sent to Binky!');
+          document.getElementById('binkyForm').reset();
+        } else {
+          alert('Failed to send message.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error sending message.');
+      });
+    });
+  </script>
+
+</body>
+</html>
